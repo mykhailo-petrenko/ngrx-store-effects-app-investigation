@@ -23,6 +23,7 @@ $RECYCLE.BIN/
 # Package Managers
 yarn-error.log
 npm-debug.log
+package-lock.json
 
 # Build
 build
