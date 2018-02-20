@@ -7,27 +7,8 @@ export interface PizzaState {
     loading: boolean
 }
 
-const _DEMO_PIZZA: Pizza = {
-    "name": "Blazin' Inferno",
-    "toppings": [
-      {
-        "id": 10,
-        "name": "pepperoni"
-      },
-      {
-        "id": 9,
-        "name": "pepper"
-      },
-      {
-        "id": 3,
-        "name": "basil"
-      }
-    ],
-    "id": 1
-  };
-
 export const initialState: PizzaState = {
-    data: [_DEMO_PIZZA],
+    data: [],
     loaded: false,
     loading: false
 };
@@ -48,6 +29,7 @@ export function reducer(
         case fromPizzas.LOAD_PIZZAS_SUCCESS: {
             return {
                 ...state,
+                data: action.payload,
                 loading: false,
                 loaded: true
             }

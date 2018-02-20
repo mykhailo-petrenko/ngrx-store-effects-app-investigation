@@ -9,7 +9,7 @@ import * as fromStrore from '../../store';
 @Component({
   selector: 'products',
   styleUrls: ['products.component.scss'],
-  templateUrl: './products.compoent.html'
+  templateUrl: 'products.component.html'
 })
 export class ProductsComponent implements OnInit {
   protected pizzas$: Observable<Pizza[]>;
@@ -20,5 +20,6 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.pizzas$ = this.store.select<Pizza[]>(fromStrore.getAllPizzas);
+    this.store.dispatch(new fromStrore.LoadPizzas());
   }
 }
