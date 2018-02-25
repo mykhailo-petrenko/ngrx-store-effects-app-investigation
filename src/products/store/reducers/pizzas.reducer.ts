@@ -17,7 +17,7 @@ export const initialState: PizzaState = {
     loading: false
 };
 
-export function reducer(
+export function pizzaReducer(
     state = initialState,
     action: fromPizzas.PizzaAction
 ): PizzaState {
@@ -35,7 +35,7 @@ export function reducer(
             const entities = pizzas.reduce(
                 (entities: PizzaEntity, pizza: Pizza) => {
                     entities[pizza.id] = pizza;
-                    
+
                     return entities;
                 },
                 {

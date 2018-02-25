@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { Pizza } from '../../models/pizza.model';
 import { Topping } from '../../models/topping.model';
 import { ProductsState, getSelectedPizza } from "../../store";
+import { LoadToppings } from '../../store/actions/toppings.action';
 
 @Component({
   selector: 'product-item',
@@ -23,6 +24,8 @@ export class ProductItemComponent implements OnInit {
 
   ngOnInit() {
     this.pizza$ = this.store.select(getSelectedPizza);
+
+    this.store.dispatch(new LoadToppings());
   }
 
   onSelect(event: number[]) {
