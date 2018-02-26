@@ -8,6 +8,7 @@ import { Topping } from '../../models/topping.model';
 import { ProductsState, getSelectedPizza, getAllToppings } from "../../store";
 import { VisualizeToppings } from "../../store/actions";
 import { getPizzaVisualized } from "../../store/selectors";
+import { CreatePizza } from '../../store/actions/pizzas.action';
 
 @Component({
   selector: 'product-item',
@@ -45,6 +46,7 @@ export class ProductItemComponent implements OnInit {
   }
 
   onCreate(event: Pizza) {
+    this.store.dispatch(new CreatePizza(event));
   }
 
   onUpdate(event: Pizza) {
