@@ -1,28 +1,39 @@
 import { Topping } from '../../models/topping.model';
-import { LOAD_TOPPINGS, LOAD_TOPPINGS_FAIL, LOAD_TOPPINGS_SUCCESS, ToppingsAction } from '../actions/toppings.action';
+import { LOAD_TOPPINGS, LOAD_TOPPINGS_FAIL, LOAD_TOPPINGS_SUCCESS, ToppingsAction, VISUALISE_TOPPINGS } from '../actions';
 
 export type ToppingEntity = {
   [id: number]: Topping
 }
 
-export interface ToppingState {
-  toppings: ToppingEntity;
+export interface ToppingsState {
+  entities: ToppingEntity;
   loaded: boolean;
   loading: boolean;
+  selectedToppings: number[];
 }
 
-export const initialState: ToppingState = {
-  toppings: {},
+export const initialState: ToppingsState = {
+  entities: {},
   loaded: false,
-  loading: false
+  loading: false,
+  selectedToppings: []
 };
 
 export function toppingsReducer(
-  state: ToppingState = initialState,
+  state: ToppingsState = initialState,
   action: ToppingsAction
-): ToppingState {
+): ToppingsState {
 
   switch (action.type) {
+    case VISUALISE_TOPPINGS: {
+      const selectedToppings = action.payload;
+
+      return {
+        ...state,
+        selectedToppings
+      }
+    }
+
     case LOAD_TOPPINGS: {
       return {
         ...state,
@@ -47,13 +58,13 @@ export function toppingsReducer(
 
           return entities;
         }, {
-          ...state.toppings
+          ...state.entities
         }
       );
 
       return {
         ...state,
-        toppings: entities,
+        entities,
         loading: false,
         loaded: true
       };
@@ -63,6 +74,7 @@ export function toppingsReducer(
   return state;
 }
 
-export const getToppingEntities = (state: ToppingState): ToppingEntity => state.toppings;
-export const getToppingLoading = (state: ToppingState): boolean => state.loading;
-export const getToppingLoaded = (state: ToppingState): boolean => state.loaded;
+export const getToppingEntities = (state: ToppingsState): ToppingEntity => state.entities;
+export const getToppingsLoading = (state: ToppingsState): boolean => state.loading;
+export const getToppingsLoaded = (state: ToppingsState): boolean => state.loaded;
+export const getSelectedToppings = (state: ToppingsState): number[] => state.selectedToppings;
