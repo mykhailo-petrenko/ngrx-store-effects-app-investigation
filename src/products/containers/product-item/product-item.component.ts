@@ -6,9 +6,8 @@ import { tap } from "rxjs/operators";
 import { Pizza } from '../../models/pizza.model';
 import { Topping } from '../../models/topping.model';
 import { ProductsState, getSelectedPizza, getAllToppings } from "../../store";
-import { VisualizeToppings } from "../../store/actions";
+import { CreatePizza, DeletePizza, UpdatePizza, VisualizeToppings } from "../../store/actions";
 import { getPizzaVisualized } from "../../store/selectors";
-import { CreatePizza } from '../../store/actions/pizzas.action';
 
 @Component({
   selector: 'product-item',
@@ -50,12 +49,13 @@ export class ProductItemComponent implements OnInit {
   }
 
   onUpdate(event: Pizza) {
+    this.store.dispatch(new UpdatePizza(event));
   }
 
   onRemove(event: Pizza) {
     const remove = window.confirm('Are you sure?');
     if (remove) {
-
+      this.store.dispatch(new DeletePizza(event));
     }
   }
 }

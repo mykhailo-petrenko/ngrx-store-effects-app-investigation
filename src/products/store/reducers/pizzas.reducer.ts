@@ -57,12 +57,29 @@ export function pizzaReducer(state = initialState,
       }
     }
 
+    case fromPizzas.UPDATE_PIZZA_SUCCESS:
     case fromPizzas.CREATE_PIZZA_SUCCESS: {
       const pizza: Pizza = action.payload;
       const entities: PizzaEntity = {
         ...state.entities,
         [pizza.id]: pizza
       };
+
+      return {
+        ...state,
+        entities
+      }
+    }
+
+    case fromPizzas.DELETE_PIZZA_SUCCESS: {
+      const pizza: Pizza = action.payload;
+
+      const entities: PizzaEntity = {
+        ...state.entities
+      };
+      entities[pizza.id] && delete entities[pizza.id];
+
+      // const { [pizza.id]: removed, ...entities}  = state.entities;
 
       return {
         ...state,
