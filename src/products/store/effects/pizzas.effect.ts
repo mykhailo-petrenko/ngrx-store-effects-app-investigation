@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, pluck } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import * as action from '../actions/pizzas.action';
@@ -32,7 +32,8 @@ export class PizzasEffect {
     createPizza$ = this.actions$
       .ofType(action.CREATE_PIZZA)
       .pipe(
-        map((action: action.CreatePizza): Pizza => action.payload),
+        pluck('payload'),
+        // map((action: action.CreatePizza): Pizza => action.payload),
         switchMap(
           (pizza: Pizza) => this.pizzaService.createPizza(pizza)
             .pipe(
