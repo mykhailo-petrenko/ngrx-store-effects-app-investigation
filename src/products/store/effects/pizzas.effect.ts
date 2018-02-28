@@ -5,6 +5,7 @@ import { switchMap, map, catchError, pluck } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import * as action from '../actions/pizzas.action';
+import * as rootActions from '../../../app/store/action';
 import { PizzasService } from '../../services';
 import { Pizza } from '../../models/pizza.model';
 
@@ -43,6 +44,18 @@ export class PizzasEffect {
     );
 
   @Effect()
+  createPizzaSuccess$ = this.actions$
+    .ofType(action.CREATE_PIZZA_SUCCESS)
+    .pipe(
+      pluck<action.CreatePizzaSuccess, Pizza>('payload'),
+      map((pizza: Pizza) => {
+        const path = ['/products', pizza.id ];
+
+        return new rootActions.Go({path});
+      })
+    );
+
+  @Effect()
   updatePizza$ = this.actions$
     .ofType(action.UPDATE_PIZZA)
     .pipe(
@@ -68,5 +81,15 @@ export class PizzasEffect {
             catchError(error => of(new action.DeletePizzaFail(error)))
           )
       )
+    );
+
+  @Effect()
+  handlePizzaSuccess$ = this.actions$
+    .ofType(
+      action.UPDATE_PIZZA_SUCCESS,
+      action.DELETE_PIZZA_SUCCESS
     )
+    .pipe(
+      map(() => new rootActions.Go({path: ['/products']}))
+    );
 }
