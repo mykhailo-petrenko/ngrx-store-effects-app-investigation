@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.pizzas$ = this.store.select<Pizza[]>(fromStrore.getAllPizzas);
-    this.store.dispatch(new fromStrore.LoadPizzas());
+    // this.store.dispatch(new fromStrore.LoadPizzas());
     this.store.dispatch(new LoadToppings());
   }
 }
